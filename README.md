@@ -16,6 +16,12 @@ Para obtener ayuda con el desarrollo en Flutter, visita la
 
 ## Instalación
 
+Para este proyecto se usaron las siguientes versiones
+
+- `DevTools 2.28.5`
+- `Flutter 3.16.9`
+- `Dart 3.2.6`
+
 Asegúrate de tener Flutter instalado en tu sistema. Puedes verificarlo con el siguiente comando:
 
 ```sh
