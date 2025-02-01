@@ -4,6 +4,13 @@
 
 Desarrollar una aplicación móvil para Android que capture una serie de parámetros a través de un formulario. Estos parámetros se enviarán a un servidor Backend alojado en AWS EC2 mediante una API REST. El servidor procesará los datos y, utilizando un modelo de Machine Learning, predecirá el precio de un avión. La respuesta con la predicción se enviará de vuelta a la aplicación móvil.
 
+## Creación del Modelo
+
+En el siguiente codelab, se explicará detalladamente el proceso de creación de un modelo de Machine Learning utilizando RandomForestRegressor. Se cubrirán todos los pasos, desde la limpieza de datos y el preprocesamiento, hasta el entrenamiento y la evaluación del modelo.
+
+- [Lab: Proyecto Final IA - Airplane_price](https://colab.research.google.com/drive/1Xtt6hKNzODoHvEsJt3jmZS_nJFzLUrBV?usp=sharing)
+
+
 ## Pasos a seguir
 
 ### Configuración del Servidor (AWS EC2)
@@ -68,9 +75,13 @@ pip install Flask joblib numpy
    - Elige "Ubuntu" como sistema operativo.
    - Configura el tamaño de la instancia (recomendada: t2.medium o superior si el modelo es pesado).
 
+![Select Ubuntu](assets/readme/ubuntu.png)
+
 2. **Configurar reglas de seguridad:**
    - Abre el puerto 8080 (o el que usará tu API) en el grupo de seguridad.
    - Habilita SSH (puerto 22) para acceder a la instancia.
+
+![Reglas](assets/readme/regla.png)
 
 3. **Conectarse a la instancia EC2:**
    - Usa SSH para conectarte a la instancia:
@@ -146,7 +157,7 @@ def predict():
         return jsonify({'error': f'Error inesperado: {str(e)}'}), 500
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8020)
 ```
 
 ---
@@ -196,130 +207,6 @@ Para probar el endpoint de predicción:
    ```
 
 4. Envía la solicitud y verifica la respuesta JSON con la predicción del precio.
-
-   
----
-
-# Configuración del Proyecto Android
-
-Este proyecto es un punto de partida para una aplicación Flutter.
-
-Algunas referencias útiles para comenzar con Flutter:
-
-- [Lab: Escribe tu primera aplicación en Flutter](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Ejemplos útiles en Flutter](https://docs.flutter.dev/cookbook)
-
-Para obtener ayuda con el desarrollo en Flutter, visita la
-[documentación en línea](https://docs.flutter.dev/), donde encontrarás tutoriales, ejemplos, guías sobre desarrollo móvil y una referencia completa de la API.
-
-## Instalación
-
-Para instalar Flutter, consulta la documentación oficial:
-- [Cómo instalar Flutter](https://docs.flutter.dev/get-started/install)
-
-Para este proyecto se usaron las siguientes versiones:
-
-- `DevTools 2.28.5`
-- `Flutter 3.16.9`
-- `Dart 3.2.6`
-
-Asegúrate de tener Flutter instalado en tu sistema. Puedes verificarlo con el siguiente comando:
-
-```sh
-flutter --version
-```
-
-Para instalar las dependencias, ejecuta:
-
-```sh
-flutter pub get
-```
-
-## Versión de Java
-
-La versión de Java utilizada en este proyecto es **1.8.0_281**.
-
-Para verificar la versión de Java utilizada en el proyecto, revisa el archivo `build.gradle` en la sección `compileOptions`:
-
-```groovy
-android {
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-}
-```
-
-También puedes verificar la versión de Java instalada en tu sistema ejecutando:
-
-```sh
-java -version
-```
-
-## Dependencias adicionales
-
-Este proyecto incluye las siguientes dependencias adicionales que no vienen por defecto en un nuevo proyecto de Flutter:
-
-| Paquete                  | Versión  | Descripción | Instalación |
-|--------------------------|-----------|-------------|--------------|
-| flutter_riverpod         | ^2.4.9    | Manejo de estado basado en Riverpod. | `flutter pub add flutter_riverpod` |
-| riverpod_annotation      | ^2.3.3    | Anotaciones para usar Riverpod con generación de código. | `flutter pub add riverpod_annotation` |
-| dio                      | ^5.4.0    | Cliente HTTP avanzado para Dart. | `flutter pub add dio` |
-| dartz                    | ^0.10.1   | Programación funcional en Dart. | `flutter pub add dartz` |
-| intl                     | ^0.17.0   | Manejo de internacionalización y fechas. | `flutter pub add intl` |
-| freezed_annotation       | ^2.0.0    | Anotaciones para clases inmutables con `freezed`. | `flutter pub add freezed_annotation` |
-| dropdown_button2         | ^2.3.9    | Un dropdown personalizado para Flutter. | `flutter pub add dropdown_button2` |
-| cupertino_icons          | ^1.0.2    | Iconos estilo iOS. | `flutter pub add cupertino_icons` |
-| lottie                   | ^3.1.3    | Soporte para animaciones Lottie en Flutter. | `flutter pub add lottie` |
-| flutter_launcher_icons   | ^0.13.1   | Personaliza los íconos de la aplicación. | `flutter pub add flutter_launcher_icons` |
-
-### Dependencias de desarrollo
-
-| Paquete                 | Versión  | Descripción | Instalación |
-|-------------------------|-----------|-------------|--------------|
-| build_runner           | ^2.4.6    | Herramienta para generación de código. | `flutter pub add build_runner --dev` |
-| freezed                | ^2.0.0    | Generador de clases inmutables. | `flutter pub add freezed --dev` |
-| riverpod_generator     | ^2.3.3    | Generador de código para Riverpod. | `flutter pub add riverpod_generator --dev` |
-| flutter_lints          | ^2.0.0    | Conjunto de reglas de linting recomendadas. | `flutter pub add flutter_lints --dev` |
-
-## Configuración de Iconos
-
-Para generar los íconos de la aplicación, usa el siguiente comando:
-
-```sh
-flutter pub run flutter_launcher_icons:main
-```
-
-## Recursos Estáticos
-
-Este proyecto incluye los siguientes archivos en la carpeta `assets/lottie/`:
-
-- `splash.json`
-- `splash_2.json`
-- `loading.json`
-
-Para asegurarte de que los activos sean cargados correctamente, revisa el archivo `pubspec.yaml` y verifica que la sección de `assets` los incluya.
-
-## Generación de Providers
-
-Si necesitas regenerar los providers, usa el siguiente comando:
-
-```sh
-dart pub run build_runner watch
-```
-
-Este comando observa los cambios en los archivos y genera automáticamente el código necesario. Asegúrate de tener las dependencias correctas en tu archivo `pubspec.yaml` para evitar errores.
-
-# Ejercicio IA Backend y Móvil (airplane_price)
-
-## Objetivo
-
-Desarrollar una aplicación móvil para Android que capture una serie de parámetros a través de un formulario. Estos parámetros se enviarán a un servidor Backend alojado en AWS EC2 mediante una API REST. El servidor procesará los datos y, utilizando un modelo de Machine Learning, predecirá el precio de un avión. La respuesta con la predicción se enviará de vuelta a la aplicación móvil.
-
-## Pasos a seguir
-
-### - `Configuración del Servidor (AWS EC2)`
-### - `Configuración Frontend (Flutter)`
 
 ---
 # Configuración del Proyecto Android
@@ -424,7 +311,7 @@ En la primera pantalla, el usuario debe ingresar la IP y el puerto del servidor 
 
 📷 _Ejemplo visual:_
 
-![](https://drive.google.com/file/d/1wqs8mbIW2yT-r3FRjzUA8huEEiG-5q3n/view?usp=sharing)
+![Pantalla de Configuración del Servidor](assets/readme/config_server.jpg)
 
 ### **Pantalla de Predicción**
 
@@ -441,7 +328,8 @@ Una vez configurado el servidor, la aplicación navega a la pantalla de predicci
 
 📷 _Ejemplo visual:_
 
-`[URL de la imagen representando esta pantalla]`
+![Pantalla de Prediccion](assets/readme/prediction.jpg)
+![Pantalla de Prediccion error](assets/readme/prediction_error_labels.jpg)
 
 ### **Validación de Rangos**
 
